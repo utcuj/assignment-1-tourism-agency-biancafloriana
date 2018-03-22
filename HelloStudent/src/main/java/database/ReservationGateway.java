@@ -2,8 +2,9 @@ package database;
 
 import com.utcn.student.db.DatabaseConnection;
 
+import java.sql.Date;
 import java.sql.ResultSet;
-import java.util.Date;
+
 
 import Exception.*;
 
@@ -11,16 +12,15 @@ public class ReservationGateway {
 
     private DatabaseConnection databaseConnection = new DatabaseConnection();
 
-    public void insert(int idClient , String destination, String hotel, int personNumber, int price, Date date, int partialPayment, boolean paid) throws Exception.ReservationGatewayException
-    {
+    public void insert(int idClient, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, boolean paid) throws Exception.ReservationGatewayException {
 
         try {
 
             databaseConnection.openConnectionToDatabase();
 
             String statement =
-            "INSERT INTO `reservation` (`destination`, `hotel`, `personNumber`, `price`, `date`, `partialPayment`, `idClient`, `paid`) VALUES ('" +
-                    destination + "', '"+hotel+"', '"+personNumber+"', '"+price+"', '"+date+"', '"+partialPayment+"', '"+idClient+"', '"+ paid+"')";
+                    "INSERT INTO `reservation` (`destination`, `hotel`, `personNumber`, `price`, `date`, `partialPayment`, `idClient`, `paid`) VALUES ('" +
+                            destination + "', '" + hotel + "', '" + personNumber + "', '" + price + "', '" + date + "', '" + partialPayment + "', '" + idClient + "', '" + paid + "')";
 
             databaseConnection.executeQuery(statement, "insert");
 
@@ -33,22 +33,21 @@ public class ReservationGateway {
         }
     }
 
-    public void update(int idReservation, int idClient , String destination, String hotel, int personNumber, int price, Date date, int partialPayment, boolean paid) throws Exception.ReservationGatewayException
-    {
+    public void update(int idReservation, int idClient, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, boolean paid) throws Exception.ReservationGatewayException {
 
         try {
 
             databaseConnection.openConnectionToDatabase();
 
             String statement =
-            "UPDATE `tourism`.`reservation` SET `destination`='"+ destination + "', `hotel`='" + hotel + "', `personNumber`='"+personNumber+
-                    "', `price`='"+price+"', `date`='"+date+"', `partialPayment`='"+partialPayment+"', `idClient`='"+idClient
-                    +"', `paid`='"+paid +"' WHERE `idReservation`='"+idReservation+"';";
+                    "UPDATE `tourism`.`reservation` SET `destination`='" + destination + "', `hotel`='" + hotel + "', `personNumber`='" + personNumber +
+                            "', `price`='" + price + "', `date`='" + date + "', `partialPayment`='" + partialPayment + "', `idClient`='" + idClient
+                            + "', `paid`='" + paid + "' WHERE `idReservation`='" + idReservation + "';";
 
 
             databaseConnection.executeQuery(statement, "update");
 
-            System.out.println("Updated reservation with id: " + idReservation +"\n");
+            System.out.println("Updated reservation with id: " + idReservation + "\n");
 
             databaseConnection.closeConnectionToDatabase();
 
@@ -57,19 +56,18 @@ public class ReservationGateway {
         }
     }
 
-    public void delete(int idReservation) throws ReservationGatewayException
-    {
+    public void delete(int idReservation) throws ReservationGatewayException {
 
         try {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "DELETE FROM `reservation` WHERE `idReservation`='"+idReservation+"';";
+            String statement = "DELETE FROM `reservation` WHERE `idReservation`='" + idReservation + "';";
 
 
             databaseConnection.executeQuery(statement, "update");
 
-            System.out.println("Deleted reservation with id: " + idReservation +"\n");
+            System.out.println("Deleted reservation with id: " + idReservation + "\n");
 
             databaseConnection.closeConnectionToDatabase();
 
@@ -86,7 +84,7 @@ public class ReservationGateway {
             String statement = "SELECT * FROM `reservation`;";
 
 
-            ResultSet  r = databaseConnection.executeQuery(statement, "select");
+            ResultSet r = databaseConnection.executeQuery(statement, "select");
 
             System.out.println("Selected all reservations. \n");
 
@@ -100,5 +98,24 @@ public class ReservationGateway {
 
     public void closeConnection() {
         databaseConnection.closeConnectionToDatabase();
+    }
+
+    public ResultSet findById(int idReservation) throws ReservationGatewayException {
+        try {
+
+            databaseConnection.openConnectionToDatabase();
+
+            String statement = "SELECT * FROM `reservation` WHERE `idReservation` ='" + idReservation + "';";
+
+            ResultSet r = databaseConnection.executeQuery(statement, "select");
+
+            System.out.println("Selected the reservation with id: " + idReservation + ".\n");
+
+
+            return r;
+
+        } catch (Exception e) {
+            throw new ReservationGatewayException("Error occured while selecting reservation by id from the database.", e);
+        }
     }
 }

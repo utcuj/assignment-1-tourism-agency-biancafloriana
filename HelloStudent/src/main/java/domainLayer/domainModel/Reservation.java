@@ -1,6 +1,7 @@
-package domainLayer;
+package domainLayer.domainModel;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 public class Reservation {
 
@@ -108,7 +109,6 @@ public class Reservation {
     public void setPaid(boolean paid) {
         this.paid = paid;
     }
-
 
 
 }

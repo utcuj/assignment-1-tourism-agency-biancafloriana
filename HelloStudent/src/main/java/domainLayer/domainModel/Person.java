@@ -1,4 +1,4 @@
-package domainLayer;
+package domainLayer.domainModel;
 
 public class Person {
 

@@ -1,4 +1,4 @@
-package domainLayer;
+package domainLayer.domainModel;
 
 public class Client {
 
@@ -28,7 +28,6 @@ public class Client {
         this.cnp = cnp;
         this.card = card;
     }
-
 
 
     public String getLastName() {
@@ -87,8 +86,8 @@ public class Client {
         this.idClient = idClient;
     }
 
-    public String toString(){
+    public String toString() {
 
-        return idClient+" "+ firstName + " " + lastName;
+        return idClient + " " + firstName + " " + lastName;
     }
 }

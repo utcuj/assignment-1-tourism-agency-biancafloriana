@@ -3,13 +3,13 @@ package database;
 import com.utcn.student.db.DatabaseConnection;
 
 import java.sql.ResultSet;
+
 import Exception.*;
 
 public class PersonGateway {
     private DatabaseConnection databaseConnection = new DatabaseConnection();
 
-    public void insert( String firstName, String lastName, int age, String cnp) throws PersonGatewayException
-    {
+    public void insert(String firstName, String lastName, int age, String cnp) throws PersonGatewayException {
 
         try {
 
@@ -29,20 +29,19 @@ public class PersonGateway {
         }
     }
 
-    public void update(int idPerson, String firstName, String lastName, int age, String cnp) throws PersonGatewayException
-    {
+    public void update(int idPerson, String firstName, String lastName, int age, String cnp) throws PersonGatewayException {
 
         try {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "UPDATE `person` SET `firstName`=' " + firstName + "', `lastName`='"+ lastName +"', `age`= '"
-                    + age + "', `cnp`='" + cnp + "' WHERE `idPerson`='"+idPerson+"';";
+            String statement = "UPDATE `person` SET `firstName`=' " + firstName + "', `lastName`='" + lastName + "', `age`= '"
+                    + age + "', `cnp`='" + cnp + "' WHERE `idPerson`='" + idPerson + "';";
 
 
             databaseConnection.executeQuery(statement, "update");
 
-            System.out.println("Updated person with id: " + idPerson +"\n");
+            System.out.println("Updated person with id: " + idPerson + "\n");
 
             databaseConnection.closeConnectionToDatabase();
 
@@ -51,19 +50,18 @@ public class PersonGateway {
         }
     }
 
-    public void delete(int idPerson) throws PersonGatewayException
-    {
+    public void delete(int idPerson) throws PersonGatewayException {
 
         try {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "DELETE FROM `person` WHERE `idPerson`='"+idPerson+"';";
+            String statement = "DELETE FROM `person` WHERE `idPerson`='" + idPerson + "';";
 
 
             databaseConnection.executeQuery(statement, "update");
 
-            System.out.println("Deleted person with id: " + idPerson +"\n");
+            System.out.println("Deleted person with id: " + idPerson + "\n");
 
             databaseConnection.closeConnectionToDatabase();
 
@@ -80,7 +78,7 @@ public class PersonGateway {
             String statement = "SELECT * FROM `person` ORDER BY `lastName`;";
 
 
-            ResultSet  r = databaseConnection.executeQuery(statement, "select");
+            ResultSet r = databaseConnection.executeQuery(statement, "select");
 
             System.out.println("Selected all persons. \n");
 
@@ -90,9 +88,28 @@ public class PersonGateway {
         } catch (Exception e) {
             throw new PersonGatewayException("Error occured while selecting person from the database.", e);
         }
-}
+    }
 
     public void closeConnection() {
         databaseConnection.closeConnectionToDatabase();
+    }
+
+    public ResultSet findById(int idPerson) throws PersonGatewayException {
+        try {
+
+            databaseConnection.openConnectionToDatabase();
+
+            String statement = "SELECT * FROM `person` WHERE `idPerson`='" + idPerson + "';";
+
+            ResultSet r = databaseConnection.executeQuery(statement, "select");
+
+            System.out.println("Selected the person with id: " + idPerson + ".\n");
+
+
+            return r;
+
+        } catch (Exception e) {
+            throw new PersonGatewayException("Error occured while selecting person by id from the database.", e);
+        }
     }
 }
