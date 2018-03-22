@@ -1,8 +1,8 @@
-package com.utcn.student;
+/*package com.utcn.student;
 
 import javax.faces.bean.ManagedBean;
 
-@ManagedBean(name = "studentBean", eager = true)
+//@ManagedBean(name = "studentBean", eager = true)
 public class StudentBean {
 
 	private String name;
@@ -43,4 +43,4 @@ public class StudentBean {
 	}
 
 }
-
+*/

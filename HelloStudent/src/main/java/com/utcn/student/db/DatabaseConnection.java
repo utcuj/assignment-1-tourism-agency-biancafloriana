@@ -9,7 +9,7 @@ public class DatabaseConnection {
 	private Connection getConnectionToMySqlDatabase() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/student?" + "user=admin&password=admin");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tourism?" + "user=root&password=root");
 			return connection;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -41,13 +41,13 @@ public class DatabaseConnection {
 				System.out.println(e);
 			} finally {
 				try {
-					if (resultSet != null) {
+					/*if (resultSet != null) {
 						resultSet.close();
 					}
 
 					if (statement != null) {
 						statement.close();
-					}
+					}*/
 				} catch (Exception e) {
 					System.out.println(e);
 				}
@@ -74,5 +74,6 @@ public class DatabaseConnection {
 			System.out.println(e);
 		}
 	}
+
 
 }
