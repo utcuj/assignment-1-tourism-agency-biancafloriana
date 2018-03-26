@@ -31,15 +31,15 @@ public class ReservationPersonsGateway {
         }
     }
 
-    public void update(int idReservationPersons, int idPerson, int idReservation) throws Exception.ReservationPersonsGatewayException {
+    public void update(int idReservationPersons, int idPerson, int idReservation) throws ReservationPersonsGatewayException {
 
         try {
 
             databaseConnection.openConnectionToDatabase();
 
             String statement =
-                    "UPDATE `reservationPersons` SET `idPerson`='" + idPerson + "', `idReservation`='" + idPerson
-                            + "' WHERE `idReservationPersons`='" + idReservationPersons + "';";
+                    "UPDATE `reservationPersons` SET `idPerson`='" + idPerson + "', `idReservation`='" + idReservation
+                            + "' WHERE `idReservationPerson`='" + idReservationPersons + "';";
 
 
             databaseConnection.executeQuery(statement, "update");
@@ -59,7 +59,7 @@ public class ReservationPersonsGateway {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "DELETE FROM `reservationPersons` WHERE `idReservationPersons`='" + idReservationPersons + "';";
+            String statement = "DELETE FROM `reservationPersons` WHERE `idReservationPerson`='" + idReservationPersons + "';";
 
 
             databaseConnection.executeQuery(statement, "update");
@@ -102,7 +102,7 @@ public class ReservationPersonsGateway {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "SELECT * FROM `reservationPersons` WHERE `idReservationPersons` ='" + idReservationPersons + "';";
+            String statement = "SELECT * FROM `reservationPersons` WHERE `idReservationPerson` ='" + idReservationPersons + "';";
 
             ResultSet r = databaseConnection.executeQuery(statement, "select");
 

@@ -53,7 +53,7 @@ public class ReservationMapper {
 
                 reservationList.add(new Reservation(r.getInt("idReservation"), r.getInt("idClient"), r.getString("destination"),
                         r.getString("hotel"), r.getInt("personNumber"), r.getInt("price"), r.getDate("date"),
-                        r.getInt("partialPayment"), r.getBoolean("paid")));
+                        r.getInt("partialPayment"), r.getInt("paid")));
 
 
             }
@@ -75,7 +75,7 @@ public class ReservationMapper {
 
                 tempReservation = new Reservation(r.getInt("idReservation"), r.getInt("idClient"), r.getString("destination"),
                         r.getString("hotel"), r.getInt("personNumber"), r.getInt("price"), r.getDate("date"),
-                        r.getInt("partialPayment"), r.getBoolean("paid"));
+                        r.getInt("partialPayment"), r.getInt("paid"));
 
 
             }

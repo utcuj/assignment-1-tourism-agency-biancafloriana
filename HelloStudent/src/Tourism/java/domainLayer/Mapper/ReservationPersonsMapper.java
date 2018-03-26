@@ -49,7 +49,7 @@ public class ReservationPersonsMapper {
             while (r.next()) {
 
 
-                reservationPersonsList.add(new ReservationPersons(r.getInt("idReservationPersons"), r.getInt("idReservation"),
+                reservationPersonsList.add(new ReservationPersons(r.getInt("idReservationPerson"), r.getInt("idReservation"),
                         r.getInt("idPerson")));
 
 
@@ -70,7 +70,7 @@ public class ReservationPersonsMapper {
             while (r.next()) {
 
 
-                tempReservationPersons = new ReservationPersons(r.getInt("idReservationPersons"), r.getInt("idReservation"),
+                tempReservationPersons = new ReservationPersons(r.getInt("idReservationPerson"), r.getInt("idReservation"),
                         r.getInt("idPerson"));
 
 

@@ -66,7 +66,7 @@ public class ClientMapper {
 
     public Client findbyId(int idClient) {
         try {
-            ResultSet r = clientGateway.findAll();
+            ResultSet r = clientGateway.findbyId(idClient);
             Client tempClient = null;
             while (r.next()) {
 
@@ -77,7 +77,6 @@ public class ClientMapper {
 
             }
             clientGateway.closeConnection();
-
             return tempClient;
         } catch (ClientGatewayException e) {
             System.out.print(e.fillInStackTrace());

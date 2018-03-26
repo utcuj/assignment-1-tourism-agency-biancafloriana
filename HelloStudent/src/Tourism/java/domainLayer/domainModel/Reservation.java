@@ -13,9 +13,9 @@ public class Reservation {
     private int price;
     private Date date;
     private int partialPayment;
-    private boolean paid;
+    private int paid;
 
-    public Reservation(int client, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, boolean paid) {
+    public Reservation(int client, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, int paid) {
         this.client = client;
         this.destination = destination;
         this.hotel = hotel;
@@ -26,7 +26,7 @@ public class Reservation {
         this.paid = paid;
     }
 
-    public Reservation(int idReservation, int client, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, boolean paid) {
+    public Reservation(int idReservation, int client, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, int paid) {
         this.idReservation = idReservation;
         this.client = client;
         this.destination = destination;
@@ -102,11 +102,11 @@ public class Reservation {
         this.partialPayment = partialPayment;
     }
 
-    public boolean isPaid() {
+    public int isPaid() {
         return paid;
     }
 
-    public void setPaid(boolean paid) {
+    public void setPaid(int paid) {
         this.paid = paid;
     }
 

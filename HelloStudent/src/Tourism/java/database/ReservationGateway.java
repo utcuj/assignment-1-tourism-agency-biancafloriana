@@ -12,7 +12,7 @@ public class ReservationGateway {
 
     private DatabaseConnection databaseConnection = new DatabaseConnection();
 
-    public void insert(int idClient, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, boolean paid) throws Exception.ReservationGatewayException {
+    public void insert(int idClient, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, int paid) throws ReservationGatewayException {
 
         try {
 
@@ -33,7 +33,7 @@ public class ReservationGateway {
         }
     }
 
-    public void update(int idReservation, int idClient, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, boolean paid) throws Exception.ReservationGatewayException {
+    public void update(int idReservation, int idClient, String destination, String hotel, int personNumber, int price, Date date, int partialPayment, int paid) throws ReservationGatewayException {
 
         try {
 

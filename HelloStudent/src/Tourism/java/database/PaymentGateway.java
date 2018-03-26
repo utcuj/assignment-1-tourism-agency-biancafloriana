@@ -10,15 +10,15 @@ import Exception.*;
 public class PaymentGateway {
     private DatabaseConnection databaseConnection = new DatabaseConnection();
 
-    public void insert(int idClient, int idPayment, int payment, Date date) throws PaymentGatewayException {
+    public void insert(int idClient,int idReservation, int payment, Date date) throws PaymentGatewayException {
 
         try {
 
             databaseConnection.openConnectionToDatabase();
 
             String statement =
-                    "INSERT INTO `payment` (`idClient`, `idPayment`, `payment`, `date`,) VALUES ('" +
-                            idClient + "', '" + idPayment + "', '" + payment + "', '" + date + "')";
+                    "INSERT INTO `payments` (`idClient`, `idReservation`, `payment`, `date`) VALUES ('" +
+                            idClient + "', '" + idReservation + "', '"+ payment + "', '" + date + "')";
 
             databaseConnection.executeQuery(statement, "insert");
 
@@ -38,7 +38,7 @@ public class PaymentGateway {
             databaseConnection.openConnectionToDatabase();
 
             String statement =
-                    "UPDATE `payment` SET `idClient`='" + idClient + "', `idReservation`='" + idReservation + "', `payment`='" + payment +
+                    "UPDATE `payments` SET `idClient`='" + idClient + "', `idReservation`='" + idReservation + "', `payment`='" + payment +
                             "', `date`='" + date + "' WHERE `idPayment`='" + idPayment + "';";
 
 
@@ -59,7 +59,7 @@ public class PaymentGateway {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "DELETE FROM `payment` WHERE `idPayment`='" + idPayment + "';";
+            String statement = "DELETE FROM `payments` WHERE `idPayment`='" + idPayment + "';";
 
 
             databaseConnection.executeQuery(statement, "update");
@@ -78,7 +78,7 @@ public class PaymentGateway {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "SELECT * FROM `payment`;";
+            String statement = "SELECT * FROM `payments`;";
 
 
             ResultSet r = databaseConnection.executeQuery(statement, "select");
@@ -102,7 +102,7 @@ public class PaymentGateway {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "SELECT * FROM `payment` WHERE `idPayment` ='" + idPayment + "';";
+            String statement = "SELECT * FROM `payments` WHERE `idPayment` ='" + idPayment + "';";
 
             ResultSet r = databaseConnection.executeQuery(statement, "select");
 

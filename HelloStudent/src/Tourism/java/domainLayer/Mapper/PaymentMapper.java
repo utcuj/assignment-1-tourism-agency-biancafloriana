@@ -19,7 +19,7 @@ public class PaymentMapper {
 
     public void insert(Payment payment) {
         try {
-            paymentGateway.insert(payment.getidClient(), payment.getIdPayment(), payment.getPayment(), payment.getDate());
+            paymentGateway.insert(payment.getidClient(),payment.getidReservation(), payment.getPayment(), payment.getDate());
         } catch (PaymentGatewayException e) {
             e.printStackTrace();
         }
@@ -27,7 +27,7 @@ public class PaymentMapper {
 
     public void update(Payment payment) {
         try {
-            paymentGateway.update(payment.getIdPayment(), payment.getidClient(), payment.getIdPayment(), payment.getPayment(), payment.getDate());
+            paymentGateway.update(payment.getIdPayment(), payment.getidClient(), payment.getidReservation(), payment.getPayment(), payment.getDate());
         } catch (PaymentGatewayException e) {
             e.printStackTrace();
         }
