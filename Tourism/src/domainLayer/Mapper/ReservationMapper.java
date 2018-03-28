@@ -4,6 +4,7 @@ import database.ReservationGateway;
 import domainLayer.domainModel.Reservation;
 import Exception.*;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,36 +17,41 @@ public class ReservationMapper {
         this.reservationGateway = new ReservationGateway();
     }
 
-
-    public void insert(Reservation reservation) {
+    public void insert(Object[] reservation, int reservationId) {
         try {
-            reservationGateway.insert(reservation.getClient(), reservation.getDestination(), reservation.getHotel(), reservation.getPersonNumber(),
-                    reservation.getPrice(), reservation.getDate(), reservation.getPartialPayment(), reservation.isPaid());
+            reservationGateway.insert(reservationId, (String)reservation[1], (String)reservation[2], Integer.valueOf((String)reservation[3]),
+                    Integer.valueOf((String)reservation[3]), Date.valueOf((String)reservation[5]), (int)reservation[6], (int)reservation[7]);
+
         } catch (ReservationGatewayException e) {
             e.printStackTrace();
         }
     }
 
-    public void update(Reservation reservation) {
+    public void update(Object[] reservation, int reservationId) {
         try {
-            reservationGateway.update(reservation.getIdReservation(), reservation.getClient(), reservation.getDestination(), reservation.getHotel(), reservation.getPersonNumber(),
-                    reservation.getPrice(), reservation.getDate(), reservation.getPartialPayment(), reservation.isPaid());
+            reservationGateway.update((int)reservation[0],
+                    reservationId, (String)reservation[1],
+                    (String)reservation[2],
+                    Integer.valueOf((String)reservation[3]),
+                    Integer.valueOf((String)reservation[3]),
+                    Date.valueOf((String)reservation[5]),
+                    (int)reservation[6], (int)reservation[7]);
         } catch (ReservationGatewayException e) {
             e.printStackTrace();
         }
     }
 
-    public void delete(Reservation reservation) {
+    public void delete(int reservationId) {
         try {
-            reservationGateway.delete(reservation.getIdReservation());
+            reservationGateway.delete(reservationId);
         } catch (ReservationGatewayException e) {
             e.printStackTrace();
         }
     }
 
-    public List<Reservation> findAll() {
+    public List<Reservation> findAll(int id) {
         try {
-            ResultSet r = reservationGateway.findAll();
+            ResultSet r = reservationGateway.findAll(id);
             List<Reservation> reservationList = new ArrayList<>();
 
             while (r.next()) {
@@ -87,4 +93,35 @@ public class ReservationMapper {
         return null;
     }
 
+    public int getLastId(){
+        try {
+            ResultSet r = reservationGateway.getLastId();
+            r.next();
+            int id = r.getInt("MAX(idReservation)");
+            reservationGateway.closeConnection();
+            return id;
+        } catch (ClientGatewayException e) {
+            System.out.print(e.fillInStackTrace());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public void updateP(int reservationId, int payments) {
+        try {
+            Reservation reservation = findById(reservationId);
+            reservationGateway.update(reservationId, reservation.getClient(), reservation.getDestination(), reservation.getHotel(), reservation.getPersonNumber()
+                    , reservation.getPrice(), reservation.getDate(), payments, reservation.getPaid());
+        }catch (Exception E){System.out.println("Nu sa putut updata paymentul");}
+    }
+
+    public void checkPaid(int reservationId){
+        try {
+            Reservation reservation = findById(reservationId);
+            if(reservation.getPrice() <= reservation.getPartialPayment())
+            reservationGateway.update(reservationId, reservation.getClient(), reservation.getDestination(), reservation.getHotel(), reservation.getPersonNumber()
+                    , reservation.getPrice(), reservation.getDate(), reservation.getPartialPayment(), 1);
+        }catch (Exception E){System.out.println("Nu sa putut updata paymentul");}
+    }
 }

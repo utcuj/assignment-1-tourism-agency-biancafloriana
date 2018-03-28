@@ -4,6 +4,7 @@ import database.PaymentGateway;
 import domainLayer.domainModel.Payment;
 import Exception.*;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,33 +18,33 @@ public class PaymentMapper {
     }
 
 
-    public void insert(Payment payment) {
+    public void insert(Object[] payment, int paymentId, int clientId) {
         try {
-            paymentGateway.insert(payment.getidClient(),payment.getidReservation(), payment.getPayment(), payment.getDate());
+            paymentGateway.insert(clientId,paymentId, Integer.valueOf((String)payment[1]),  Date.valueOf((String)payment[2]));
         } catch (PaymentGatewayException e) {
             e.printStackTrace();
         }
     }
 
-    public void update(Payment payment) {
+    public void update(Object[] payment, int paymentId, int clientId) {
         try {
-            paymentGateway.update(payment.getIdPayment(), payment.getidClient(), payment.getidReservation(), payment.getPayment(), payment.getDate());
+            paymentGateway.update((int)payment[0],clientId,paymentId, Integer.valueOf((String)payment[1]),  Date.valueOf((String)payment[5]));
         } catch (PaymentGatewayException e) {
             e.printStackTrace();
         }
     }
 
-    public void delete(Payment payment) {
+    public void delete(int paymentId) {
         try {
-            paymentGateway.delete(payment.getIdPayment());
+            paymentGateway.delete(paymentId);
         } catch (PaymentGatewayException e) {
             e.printStackTrace();
         }
     }
 
-    public List<Payment> findAll() {
+    public List<Payment> findAll(int reservationId) {
         try {
-            ResultSet r = paymentGateway.findAll();
+            ResultSet r = paymentGateway.findAll(reservationId);
             List<Payment> paymentList = new ArrayList<>();
 
             while (r.next()) {
@@ -80,4 +81,38 @@ public class PaymentMapper {
         }
         return null;
     }
+    public int getLastId(){
+        try {
+            ResultSet r = paymentGateway.getLastId();
+            r.next();
+            int id = r.getInt("MAX(idpayment)");
+            paymentGateway.closeConnection();
+            return id;
+        } catch (ClientGatewayException e) {
+            System.out.print(e.fillInStackTrace());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int getPayments(int idReservation){
+        try {
+            ResultSet r = paymentGateway.getPayments(idReservation);
+            int tempPayment =  0;
+
+            while (r.next()) {
+
+                tempPayment += r.getInt("payment");
+            }
+            paymentGateway.closeConnection();
+            return tempPayment;
+        } catch (ClientGatewayException e) {
+            System.out.print(e.fillInStackTrace());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

@@ -42,17 +42,17 @@ public class Test {
         }
         System.out.println(reservationMapper.findById(2));*/
 
-       /* PaymentMapper paymentMapper = new PaymentMapper();
+        PaymentMapper paymentMapper = new PaymentMapper();
 
         //paymentMapper.insert(new Payment(8,2, 100,Date.valueOf("2018-3-3")));
        //paymentMapper.update(new Payment(2,8,2, 1000,Date.valueOf("2018-3-3")));
-        paymentMapper.delete(new Payment(2,8,2, 1000,Date.valueOf("2018-3-3")));
-        List paymentList = paymentMapper.findAll();
+        //paymentMapper.delete(new Payment(2,8,2, 1000,Date.valueOf("2018-3-3")));
+        /*List paymentList = paymentMapper.findAll(3);
         for (Object i : paymentList) {
             System.out.println(((Payment) i).toString());
         }
         System.out.println(paymentMapper.findById(1));
-        */
+
 
        /*  ReservationPersonsMapper reservationPersonsMapper = new ReservationPersonsMapper();
 

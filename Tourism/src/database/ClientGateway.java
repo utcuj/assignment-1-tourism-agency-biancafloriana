@@ -113,6 +113,25 @@ public class ClientGateway {
 
     }
 
+    public ResultSet getLastId() throws ClientGatewayException {
+        try {
+
+            databaseConnection.openConnectionToDatabase();
+
+            String statement = "SELECT MAX(idClient) from client;";
+
+            ResultSet r = databaseConnection.executeQuery(statement, "select");
+
+            System.out.println("Selected last id\n");
+
+            return r;
+
+        } catch (Exception e) {
+            throw new ClientGatewayException("Error occured while selecting client by id from the database.", e);
+        }
+
+    }
+
     public void closeConnection() {
         databaseConnection.closeConnectionToDatabase();
     }

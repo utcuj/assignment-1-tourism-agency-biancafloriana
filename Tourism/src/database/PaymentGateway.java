@@ -73,12 +73,12 @@ public class PaymentGateway {
         }
     }
 
-    public ResultSet findAll() throws PaymentGatewayException {
+    public ResultSet findAll(int reservationId) throws PaymentGatewayException {
         try {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "SELECT * FROM `payments`;";
+            String statement = "SELECT * FROM `payments`WHERE `idReservation`='"+reservationId+"';";
 
 
             ResultSet r = databaseConnection.executeQuery(statement, "select");
@@ -114,5 +114,44 @@ public class PaymentGateway {
         } catch (Exception e) {
             throw new PaymentGatewayException("Error occured while selecting payment by id from the database.", e);
         }
+    }
+
+    public ResultSet getLastId() throws ClientGatewayException {
+        try {
+
+            databaseConnection.openConnectionToDatabase();
+
+            String statement = "SELECT MAX(idpayment) from payments;";
+
+            ResultSet r = databaseConnection.executeQuery(statement, "select");
+
+            System.out.println("Selected last id\n");
+
+            return r;
+
+        } catch (Exception e) {
+            throw new ClientGatewayException("Error occured while selecting client by id from the database.", e);
+        }
+
+    }
+
+    public ResultSet getPayments(int idReservation) throws ClientGatewayException {
+        try {
+
+            databaseConnection.openConnectionToDatabase();
+
+            String statement = "SELECT `payment` FROM `payments` WHERE `idReservation` ='" + idReservation +"';";
+
+            ResultSet r = databaseConnection.executeQuery(statement, "select");
+
+            System.out.println("Selected last id\n");
+
+            return r;
+
+        } catch (Exception e) {
+            throw new ClientGatewayException("Error occured while selecting client by id from the database.", e);
+        }
+
+
     }
 }

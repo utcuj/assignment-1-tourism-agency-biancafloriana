@@ -76,12 +76,12 @@ public class ReservationGateway {
         }
     }
 
-    public ResultSet findAll() throws ReservationGatewayException {
+    public ResultSet findAll(int id) throws ReservationGatewayException {
         try {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "SELECT * FROM `reservation`;";
+            String statement = "SELECT * FROM `reservation` WHERE `idClient` ='"+ id + "';";
 
 
             ResultSet r = databaseConnection.executeQuery(statement, "select");
@@ -118,4 +118,23 @@ public class ReservationGateway {
             throw new ReservationGatewayException("Error occured while selecting reservation by id from the database.", e);
         }
     }
+    public ResultSet getLastId() throws ClientGatewayException {
+        try {
+
+            databaseConnection.openConnectionToDatabase();
+
+            String statement = "SELECT MAX(idReservation) from reservation;";
+
+            ResultSet r = databaseConnection.executeQuery(statement, "select");
+
+            System.out.println("Selected last id\n");
+
+            return r;
+
+        } catch (Exception e) {
+            throw new ClientGatewayException("Error occured while selecting client by id from the database.", e);
+        }
+
+    }
+
 }

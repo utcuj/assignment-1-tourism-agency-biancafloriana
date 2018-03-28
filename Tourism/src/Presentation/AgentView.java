@@ -12,19 +12,21 @@ public class AgentView {
     private JTable tableClient;
     private DefaultTableModel modelClient;
     private JButton addButton;
-    private JButton updateButton;
+    private JButton deleteButton;
     private JButton newRowButton;
     private JScrollPane listClient;
+    private JButton rezButton;
 
 
     AgentView() {
         jframe = new JFrame();
         jpanel = new JPanel();
         addButton = new JButton("Add");
-        updateButton = new JButton("New Row");
-        newRowButton = new JButton("Update");
+        deleteButton = new JButton("Delete");
+        newRowButton = new JButton("New Row");
         tableClient = new JTable();
         listClient = new JScrollPane(tableClient);
+        rezButton = new JButton("Reservations");
 
     }
 
@@ -34,8 +36,9 @@ public class AgentView {
         jpanel.add(listClient);
         jframe.setContentPane(jpanel);
         jpanel.add(addButton);
-        jpanel.add(updateButton);
+        jpanel.add(deleteButton);
         jpanel.add(newRowButton);
+        jpanel.add(rezButton);
         jframe.setLocation(600, 200);
         jframe.setSize(600, 600);
         jframe.setDefaultCloseOperation(jframe.EXIT_ON_CLOSE);
@@ -79,13 +82,17 @@ public class AgentView {
 
     }
 
-    public void addListenerUpdateB(ActionListener ButtonL) {
-        updateButton.addActionListener(ButtonL);
+    public void addListenerDeleteB(ActionListener ButtonL) {
+        deleteButton.addActionListener(ButtonL);
 
     }
 
     public void addListenerNewRB(ActionListener ButtonL) {
         newRowButton.addActionListener(ButtonL);
+
+    }
+    public void addListenerRezB(ActionListener ButtonL) {
+        rezButton.addActionListener(ButtonL);
 
     }
 
@@ -99,5 +106,11 @@ public class AgentView {
 
     public void addNewRow(){
         modelClient.addRow( new Object[]{});
+    }
+
+    public void removeRow() { modelClient.removeRow( tableClient.getSelectedRow());}
+
+    public void UpdateId(int id) {
+        modelClient.setValueAt(id,tableClient.getSelectedRow(),0);
     }
 }

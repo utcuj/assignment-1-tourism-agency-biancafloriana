@@ -17,25 +17,25 @@ public class ClientMapper {
     }
 
 
-    public void insert(Client client) {
+    public void insert(Object[] client) {
         try {
-            clientGateway.insert(client.getFirstName(), client.getLastName(), client.getAge(), client.getCnp(), client.getCard(), client.getAdress());
+            clientGateway.insert((String)client[1],(String)client[2],Integer.valueOf((String)client[3]),(String)client[4],(String)client[5],(String)client[6]);
         } catch (ClientGatewayException e) {
             System.out.print(e.fillInStackTrace());
         }
     }
 
-    public void update(Client client) {
+    public void update(Object[] client) {
         try {
-            clientGateway.update(client.getIdClient(), client.getFirstName(), client.getLastName(), client.getAge(), client.getCnp(), client.getCard(), client.getAdress());
+            clientGateway.update((int)client[0],(String)client[1],(String)client[2],Integer.valueOf((String)client[3]),(String)client[4],(String)client[5],(String)client[6]);
         } catch (ClientGatewayException e) {
             System.out.print(e.fillInStackTrace());
         }
     }
 
-    public void delete(Client client) {
+    public void delete(int clientId) {
         try {
-            clientGateway.delete(client.getIdClient());
+            clientGateway.delete(clientId);
         } catch (ClientGatewayException e) {
             System.out.print(e.fillInStackTrace());
         }
@@ -83,6 +83,21 @@ public class ClientMapper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getLastId(){
+        try {
+            ResultSet r = clientGateway.getLastId();
+            r.next();
+            int id = r.getInt("MAX(idClient)");
+            clientGateway.closeConnection();
+            return id;
+        } catch (ClientGatewayException e) {
+            System.out.print(e.fillInStackTrace());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 

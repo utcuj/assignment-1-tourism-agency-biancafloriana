@@ -102,7 +102,7 @@ public class Reservation {
         this.partialPayment = partialPayment;
     }
 
-    public int isPaid() {
+    public int getPaid() {
         return paid;
     }
 
