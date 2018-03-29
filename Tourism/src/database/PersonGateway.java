@@ -5,6 +5,7 @@ package database;
 import java.sql.ResultSet;
 
 import Exception.*;
+import database.Connection.DatabaseConnection;
 
 public class PersonGateway {
     private DatabaseConnection databaseConnection = new DatabaseConnection();

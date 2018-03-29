@@ -14,7 +14,6 @@ public class PaymentView {
     private JTable tablePayment;
     private DefaultTableModel modelPayment;
     private JButton addButton;
-    private JButton deleteButton;
     private JButton newRowButton;
     private JScrollPane listPayment;
 
@@ -23,23 +22,21 @@ public class PaymentView {
         jframe = new JFrame();
         jpanel = new JPanel();
         addButton = new JButton("Add");
-        //deleteButton = new JButton("Delete");
         newRowButton = new JButton("New Row");
         tablePayment = new JTable();
         listPayment = new JScrollPane(tablePayment);
-
+        init();
     }
 
-    public void init() {
+    private void init() {
         initTable();
 
         jpanel.add(listPayment);
         jframe.setContentPane(jpanel);
         jpanel.add(addButton);
-        //jpanel.add(deleteButton);
         jpanel.add(newRowButton);
         jframe.setLocation(600, 200);
-        jframe.setSize(600, 600);
+        jframe.setSize(500, 600);
         // jframe.setDefaultCloseOperation(jframe.EXIT_ON_CLOSE);
         jframe.setVisible(true);
 
@@ -52,12 +49,11 @@ public class PaymentView {
         cols.add("date");
 
 
-        modelPayment = new DefaultTableModel(null,cols){
-            public boolean isCellEditable(int row, int column)
-            {
-                if(column==0 || column == 2)return false;
-                return true;
-            }};
+        modelPayment = new DefaultTableModel(null, cols) {
+            public boolean isCellEditable(int row, int column) {
+                return column != 0 && column != 2;
+            }
+        };
         tablePayment.setModel(modelPayment);
     }
 
@@ -67,7 +63,7 @@ public class PaymentView {
         int colNumber = modelPayment.getColumnCount();
         Object[] result = new Object[colNumber];
 
-        for (int i = 0; i < colNumber-1; i++) {
+        for (int i = 0; i < colNumber - 1; i++) {
             result[i] = tablePayment.getModel().getValueAt(id, i);
         }
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -81,10 +77,6 @@ public class PaymentView {
 
     }
 
-    public void addListenerDeleteB(ActionListener ButtonL) {
-        deleteButton.addActionListener(ButtonL);
-
-    }
 
     public void addListenerNewRB(ActionListener ButtonL) {
         newRowButton.addActionListener(ButtonL);
@@ -99,14 +91,13 @@ public class PaymentView {
         modelPayment.addRow(client);
     }
 
-    public void addNewRow(){
-        modelPayment.addRow( new Object[]{});
+    public void addNewRow() {
+        modelPayment.addRow(new Object[]{});
     }
 
-    public void removeRow() { modelPayment.removeRow( tablePayment.getSelectedRow());}
 
     public void UpdateId(int id, Date date) {
-        modelPayment.setValueAt(id,tablePayment.getSelectedRow(),0);
-        modelPayment.setValueAt(date,tablePayment.getSelectedRow(),2);
+        modelPayment.setValueAt(id, tablePayment.getSelectedRow(), 0);
+        modelPayment.setValueAt(date, tablePayment.getSelectedRow(), 2);
     }
 }

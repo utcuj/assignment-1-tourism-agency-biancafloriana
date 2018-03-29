@@ -2,6 +2,8 @@ package domainLayer.domainModel;
 
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Reservation {
 
@@ -111,4 +113,14 @@ public class Reservation {
     }
 
 
+    public boolean isDatePassed(){
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.now();
+        return date.compareTo(Date.valueOf(dtf.format(localDate)))==-1 && paid == 0;
+    }
+
+    public boolean checkPaid(){
+        return price <= partialPayment;
+    }
 }

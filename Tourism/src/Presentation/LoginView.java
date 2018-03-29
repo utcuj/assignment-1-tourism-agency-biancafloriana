@@ -19,8 +19,9 @@ public class LoginView {
         this.passwordL = new JLabel("Password");
         this.usernameTF = new JTextField(10);
         this.passwordTF = new JTextField(10);
+        init();
     }
-    public void init() {
+    private void init() {
 
         jframe.setContentPane(jpanel);
         jpanel.add(usernameLabel);

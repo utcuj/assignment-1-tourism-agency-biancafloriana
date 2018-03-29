@@ -1,4 +1,4 @@
-package database;
+package database.Connection;
 
 import java.sql.*;
 

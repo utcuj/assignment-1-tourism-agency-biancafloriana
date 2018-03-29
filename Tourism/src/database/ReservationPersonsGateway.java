@@ -2,8 +2,8 @@ package database;
 
 
 import Exception.*;
+import database.Connection.DatabaseConnection;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 
 public class ReservationPersonsGateway {
@@ -59,7 +59,7 @@ public class ReservationPersonsGateway {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "DELETE FROM `reservationPersons` WHERE `idReservationPerson`='" + idReservationPersons + "';";
+            String statement = "DELETE FROM `reservationPersons` WHERE `idReservation`='" + idReservationPersons + "';";
 
 
             databaseConnection.executeQuery(statement, "update");

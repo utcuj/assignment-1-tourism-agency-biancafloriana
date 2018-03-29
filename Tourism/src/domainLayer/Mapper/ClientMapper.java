@@ -3,6 +3,7 @@ package domainLayer.Mapper;
 import database.ClientGateway;
 import Exception.*;
 import domainLayer.domainModel.Client;
+import domainLayer.domainModel.Reservation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,25 +20,30 @@ public class ClientMapper {
 
     public void insert(Object[] client) {
         try {
-            clientGateway.insert((String)client[1],(String)client[2],Integer.valueOf((String)client[3]),(String)client[4],(String)client[5],(String)client[6]);
+            clientGateway.insert((String) client[1], (String) client[2], Integer.valueOf((String) client[3]), (String) client[4], (String) client[5], (String) client[6]);
         } catch (ClientGatewayException e) {
-            System.out.print(e.fillInStackTrace());
+            System.out.println("Error occured while saving client to the database.");
         }
     }
 
     public void update(Object[] client) {
         try {
-            clientGateway.update((int)client[0],(String)client[1],(String)client[2],Integer.valueOf((String)client[3]),(String)client[4],(String)client[5],(String)client[6]);
+            clientGateway.update((int) client[0], (String) client[1], (String) client[2], Integer.valueOf((String) client[3]), (String) client[4], (String) client[5], (String) client[6]);
         } catch (ClientGatewayException e) {
-            System.out.print(e.fillInStackTrace());
+            System.out.println("Error occured while updating client to the database.");
         }
     }
 
     public void delete(int clientId) {
         try {
+
+            ReservationMapper reservationMapper= new ReservationMapper();
+
+            reservationMapper.deleteByClientId(clientId);
+
             clientGateway.delete(clientId);
         } catch (ClientGatewayException e) {
-            System.out.print(e.fillInStackTrace());
+            System.out.println("Error occured while deleting client to the database.");
         }
     }
 
@@ -52,19 +58,16 @@ public class ClientMapper {
                         r.getInt("age"), r.getString("adress"), r.getString("cnp"),
                         r.getString("card")));
 
-
             }
             clientGateway.closeConnection();
             return clientList;
-        } catch (ClientGatewayException e) {
-            System.out.print(e.fillInStackTrace());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (ClientGatewayException | SQLException e) {
+            System.out.println("Error occured while selecting client to the database.");
         }
         return null;
     }
 
-    public Client findbyId(int idClient) {
+        public Client findbyId(int idClient) {
         try {
             ResultSet r = clientGateway.findbyId(idClient);
             Client tempClient = null;
@@ -77,26 +80,23 @@ public class ClientMapper {
             }
             clientGateway.closeConnection();
             return tempClient;
-        } catch (ClientGatewayException e) {
-            System.out.print(e.fillInStackTrace());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        }catch (ClientGatewayException | SQLException e) {
+                System.out.println("Error occured while selecting client to the database.");
+            }
+            return null;
     }
 
-    public int getLastId(){
+    public int getLastId() {
         try {
             ResultSet r = clientGateway.getLastId();
             r.next();
             int id = r.getInt("MAX(idClient)");
             clientGateway.closeConnection();
             return id;
-        } catch (ClientGatewayException e) {
-            System.out.print(e.fillInStackTrace());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        }catch (ClientGatewayException | SQLException e) {
+                System.out.println("Error occured while selecting client to the database.");
+            }
+
         return -1;
     }
 

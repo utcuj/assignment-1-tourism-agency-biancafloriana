@@ -16,6 +16,7 @@ public class AgentView {
     private JButton newRowButton;
     private JScrollPane listClient;
     private JButton rezButton;
+    private  JButton passedButton;
 
 
     AgentView() {
@@ -24,13 +25,14 @@ public class AgentView {
         addButton = new JButton("Add");
         deleteButton = new JButton("Delete");
         newRowButton = new JButton("New Row");
+        passedButton = new JButton("Passed date");
         tableClient = new JTable();
         listClient = new JScrollPane(tableClient);
         rezButton = new JButton("Reservations");
-
+        init();
     }
 
-    public void init() {
+    private void init() {
         initTable();
 
         jpanel.add(listClient);
@@ -39,9 +41,10 @@ public class AgentView {
         jpanel.add(deleteButton);
         jpanel.add(newRowButton);
         jpanel.add(rezButton);
+        jpanel.add(passedButton);
         jframe.setLocation(600, 200);
-        jframe.setSize(600, 600);
-        jframe.setDefaultCloseOperation(jframe.EXIT_ON_CLOSE);
+        jframe.setSize(500, 600);
+        //jframe.setDefaultCloseOperation(jframe.EXIT_ON_CLOSE);
         jframe.setVisible(true);
 
     }
@@ -59,8 +62,7 @@ public class AgentView {
         modelClient = new DefaultTableModel(null,cols){
             public boolean isCellEditable(int row, int column)
             {
-                if(column==0)return false;
-                return true;
+                return column != 0;
             }};
         tableClient.setModel(modelClient);
     }
@@ -93,6 +95,11 @@ public class AgentView {
     }
     public void addListenerRezB(ActionListener ButtonL) {
         rezButton.addActionListener(ButtonL);
+
+    }
+
+    public void addListenerPassedB(ActionListener ButtonL) {
+        passedButton.addActionListener(ButtonL);
 
     }
 

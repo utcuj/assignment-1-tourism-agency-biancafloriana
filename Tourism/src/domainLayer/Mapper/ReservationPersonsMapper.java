@@ -33,9 +33,9 @@ public class ReservationPersonsMapper {
         }
     }
 
-    public void delete(ReservationPersons reservationPersons) {
+    public void delete(int id) {
         try {
-            reservationPersonsGateway.delete(reservationPersons.getIdReservationPersons());
+            reservationPersonsGateway.delete(id);
         } catch (ReservationPersonsGatewayException e) {
             e.printStackTrace();
         }

@@ -34,9 +34,9 @@ public class PaymentMapper {
         }
     }
 
-    public void delete(int paymentId) {
+    public void delete(int idReservation) {
         try {
-            paymentGateway.delete(paymentId);
+            paymentGateway.delete(idReservation);
         } catch (PaymentGatewayException e) {
             e.printStackTrace();
         }

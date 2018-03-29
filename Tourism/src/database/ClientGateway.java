@@ -3,6 +3,7 @@ package database;
 
 
 import Exception.*;
+import database.Connection.DatabaseConnection;
 
 import java.sql.ResultSet;
 

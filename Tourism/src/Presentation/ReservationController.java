@@ -1,12 +1,11 @@
 package Presentation;
 
-import domainLayer.Mapper.PaymentMapper;
 import domainLayer.Mapper.ReservationMapper;
+import domainLayer.Mapper.UserInfoMapper;
 import domainLayer.domainModel.Reservation;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -14,10 +13,13 @@ public class ReservationController {
     
         private ReservationView reservationView ;
         private int clientId;
-    public ReservationController(int id) {
+        private String username;
+
+    public ReservationController(int id,String username) {
+        this.username = username;
         clientId = id;
         reservationView = new ReservationView();
-        reservationView.init();
+
         addListenerAddB();
         addListenerDeleteB();
         addListenerNewB();
@@ -38,9 +40,14 @@ public class ReservationController {
                         reservationMapper.insert(date,clientId);
                         int id = reservationMapper.getLastId();
                         reservationView.UpdateId(id);
+                        UserInfoMapper userInfoMapper = new UserInfoMapper(username);
+                        userInfoMapper.insertReservation(clientId,id);
                     }
                     else {
                         reservationMapper.update(date,clientId);
+
+                        UserInfoMapper userInfoMapper = new UserInfoMapper(username);
+                        userInfoMapper.updateReservation(clientId,(int)date[0]);
                     }
 
                 }catch(Exception e){
@@ -61,7 +68,7 @@ public class ReservationController {
                 try{
                     reservationView.addNewRow();
                 }catch(Exception e){
-                    reservationView.printMessage("Nu am putut adauga un rand nou!");
+                    reservationView.printMessage("Nu am putut adauga un rand nou !");
                     e.printStackTrace();
                 }
             }
@@ -75,7 +82,8 @@ public class ReservationController {
             public void actionPerformed(ActionEvent arg0) {
                 try{
                     Object[] date = reservationView.getReservation();
-                    PersonController personController = new PersonController((int)date[0]);
+                    //PersonController personController =
+                    new PersonController((int)date[0]);
 
                 }catch(Exception e){
                     reservationView.printMessage("Datele nu sunt valide!");
@@ -95,7 +103,8 @@ public class ReservationController {
                 try{
                     Object[] date = reservationView.getReservation();
                     System.out.print((int)date[0]);
-                    PaymentController paymentController = new PaymentController((int)date[0],clientId);
+                    //PaymentController paymentController =
+                    new PaymentController((int)date[0],clientId,username);
 
                 }catch(Exception e){
                     reservationView.printMessage("Datele nu sunt valide!");
@@ -118,6 +127,9 @@ public class ReservationController {
                     if(date[0]!=null){
                         reservationMapper.delete((int)date[0]);
                         reservationView.removeRow();
+
+                        UserInfoMapper userInfoMapper = new UserInfoMapper(username);
+                        userInfoMapper.deletedReservation(clientId,(int)date[0]);
                     }
                 }catch(Exception e){
                     reservationView.printMessage("Nu s-a putut efectua stergerea!");
@@ -128,12 +140,11 @@ public class ReservationController {
         reservationView.addListenerDeleteB(ButtonL);
     }
 
-    public void ListReservation(){
+    private void ListReservation(){
         ReservationMapper reservationMapper = new ReservationMapper();
         List<Reservation> reservationList = reservationMapper.findAll(clientId);
 
-        for(Iterator<Reservation> i = reservationList.iterator(); i.hasNext();){
-            Reservation reservation=i.next();
+        for (Reservation reservation : reservationList) {
             Vector reservationV = new Vector();
 
             reservationV.add(reservation.getIdReservation());

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 
 
 import Exception.*;
+import database.Connection.DatabaseConnection;
 
 public class ReservationGateway {
 
@@ -76,12 +77,30 @@ public class ReservationGateway {
         }
     }
 
-    public ResultSet findAll(int id) throws ReservationGatewayException {
+    public ResultSet findAllReservationForClient(int id) throws ReservationGatewayException {
         try {
 
             databaseConnection.openConnectionToDatabase();
 
             String statement = "SELECT * FROM `reservation` WHERE `idClient` ='"+ id + "';";
+
+            ResultSet r = databaseConnection.executeQuery(statement, "select");
+
+            System.out.println("Selected all reservations for a client. \n");
+
+
+            return r;
+
+        } catch (Exception e) {
+            throw new ReservationGatewayException("Error occured while selecting reservation for a client from the database.", e);
+        }
+    }
+    public ResultSet findAll() throws ReservationGatewayException {
+        try {
+
+            databaseConnection.openConnectionToDatabase();
+
+            String statement = "SELECT * FROM `reservation` ;";
 
 
             ResultSet r = databaseConnection.executeQuery(statement, "select");
@@ -118,7 +137,7 @@ public class ReservationGateway {
             throw new ReservationGatewayException("Error occured while selecting reservation by id from the database.", e);
         }
     }
-    public ResultSet getLastId() throws ClientGatewayException {
+    public ResultSet getLastId() {
         try {
 
             databaseConnection.openConnectionToDatabase();
@@ -132,9 +151,27 @@ public class ReservationGateway {
             return r;
 
         } catch (Exception e) {
-            throw new ClientGatewayException("Error occured while selecting client by id from the database.", e);
+            System.out.println("Error occured while selecting reservation last id.");
         }
-
+        return null;
     }
 
+    public void deleteByClientId(int clientId) {
+        try {
+
+            databaseConnection.openConnectionToDatabase();
+
+            String statement = "DELETE FROM `reservation` WHERE `idClient`='" + clientId + "';";
+
+
+            databaseConnection.executeQuery(statement, "update");
+
+            System.out.println("Deleted reservation with client id: " + clientId + "\n");
+
+            databaseConnection.closeConnectionToDatabase();
+
+        } catch (Exception e) {
+            System.out.println("Error occured while deleting reservation from the database.");
+        }
+    }
 }

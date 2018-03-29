@@ -27,9 +27,10 @@ public class ReservationView {
         listReservation = new JScrollPane(tableReservation);
         personButton = new JButton("Persons");
         paymentButton = new JButton("Payments");
+        init();
     }
 
-    public void init() {
+    private void init() {
         initTable();
 
         jpanel.add(listReservation);
@@ -60,8 +61,7 @@ public class ReservationView {
         modelReservation = new DefaultTableModel(null,cols){
             public boolean isCellEditable(int row, int column)
             {
-                if(column==0 || column == 6 || column == 7)return false;
-                return true;
+                return column != 0 && column != 6 && column != 7;
             }};
         tableReservation.setModel(modelReservation);
     }

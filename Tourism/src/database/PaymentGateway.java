@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 
 import Exception.*;
+import database.Connection.DatabaseConnection;
 
 public class PaymentGateway {
     private DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -53,18 +54,18 @@ public class PaymentGateway {
         }
     }
 
-    public void delete(int idPayment) throws PaymentGatewayException {
+    public void delete(int idReservation) throws PaymentGatewayException {
 
         try {
 
             databaseConnection.openConnectionToDatabase();
 
-            String statement = "DELETE FROM `payments` WHERE `idPayment`='" + idPayment + "';";
+            String statement = "DELETE FROM `payments` WHERE `idReservation`='" + idReservation + "';";
 
 
             databaseConnection.executeQuery(statement, "update");
 
-            System.out.println("Deleted payment with id: " + idPayment + "\n");
+            System.out.println("Deleted payment with id: " + idReservation + "\n");
 
             databaseConnection.closeConnectionToDatabase();
 
@@ -130,7 +131,7 @@ public class PaymentGateway {
             return r;
 
         } catch (Exception e) {
-            throw new ClientGatewayException("Error occured while selecting client by id from the database.", e);
+            throw new ClientGatewayException("Error occured while selecting payment last id", e);
         }
 
     }
@@ -149,7 +150,7 @@ public class PaymentGateway {
             return r;
 
         } catch (Exception e) {
-            throw new ClientGatewayException("Error occured while selecting client by id from the database.", e);
+            throw new ClientGatewayException("Error occured while selecting payments for a client", e);
         }
 
 
