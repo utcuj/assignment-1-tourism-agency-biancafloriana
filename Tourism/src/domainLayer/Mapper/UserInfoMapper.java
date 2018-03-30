@@ -1,8 +1,7 @@
 package domainLayer.Mapper;
 
-import database.UserInfoGateway;
-import domainLayer.domainModel.User;
-import domainLayer.domainModel.UserInfo;
+import database.Gateway.UserInfoGateway;
+import domainLayer.Model.UserInfo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

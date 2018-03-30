@@ -1,9 +1,8 @@
 package domainLayer.Mapper;
 
-import database.UserGateway;
-import domainLayer.domainModel.User;
+import database.Gateway.UserGateway;
+import domainLayer.Model.User;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

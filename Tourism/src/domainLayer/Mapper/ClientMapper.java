@@ -1,9 +1,8 @@
 package domainLayer.Mapper;
 
-import database.ClientGateway;
+import database.Gateway.ClientGateway;
 import Exception.*;
-import domainLayer.domainModel.Client;
-import domainLayer.domainModel.Reservation;
+import domainLayer.Model.Client;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

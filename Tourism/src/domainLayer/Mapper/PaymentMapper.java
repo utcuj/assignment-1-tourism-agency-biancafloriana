@@ -1,7 +1,7 @@
 package domainLayer.Mapper;
 
-import database.PaymentGateway;
-import domainLayer.domainModel.Payment;
+import database.Gateway.PaymentGateway;
+import domainLayer.Model.Payment;
 import Exception.*;
 
 import java.sql.Date;

@@ -1,7 +1,7 @@
 package domainLayer.Mapper;
 
-import database.ReservationGateway;
-import domainLayer.domainModel.Reservation;
+import database.Gateway.ReservationGateway;
+import domainLayer.Model.Reservation;
 import Exception.*;
 
 import java.sql.Date;

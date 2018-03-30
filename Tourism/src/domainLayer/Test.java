@@ -1,10 +1,6 @@
 package domainLayer;
 
 import domainLayer.Mapper.*;
-import domainLayer.domainModel.*;
-
-import java.sql.Date;
-import java.util.List;
 
 public class Test {
 

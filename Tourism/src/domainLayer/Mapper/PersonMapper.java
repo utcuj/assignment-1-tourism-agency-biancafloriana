@@ -1,8 +1,8 @@
 package domainLayer.Mapper;
 
 import Exception.PersonGatewayException;
-import database.PersonGateway;
-import domainLayer.domainModel.Person;
+import database.Gateway.PersonGateway;
+import domainLayer.Model.Person;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
